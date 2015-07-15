@@ -4,7 +4,7 @@
     "email": "brendanpmurray@gmail.com",
     "url": "http://coolfore.com/"
   },
-  "name": "node-red-node-susi",
+  "name": "node-red-contrib-susi",
   "version": "0.0.2",
   "description": "Node-red node for SUSI",
   "dependencies": {
@@ -12,7 +12,7 @@
      "node-susiiot": "0.0.1"
  },
   "repository": {
-    "url": "https://github.com/ADVANTECH-Corp/node-red-node-susi"
+    "url": "https://github.com/ADVANTECH-Corp/node-red-contrib-susi"
   },
   "keywords": [
     "ADVANTECH",
@@ -22,9 +22,9 @@
   ],
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/ADVANTECH-Corp/node-red-node-susi/issues"
+    "url": "https://github.com/ADVANTECH-Corp/node-red-contrib-susi/issues"
   },
-  "homepage": "https://github.com/ADVANTECH-Corp/node-red-node-susi",
+  "homepage": "https://github.com/ADVANTECH-Corp/node-red-contrib-susi",
   "node-red": {
     "nodes": {
       "SUSI-Temp": "SUSI-node/SUSI-Temp.js",

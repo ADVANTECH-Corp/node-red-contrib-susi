@@ -1,14 +1,14 @@
-# node-red-node-susi
+# node-red-contrib-susi
 A collection of [Node-RED](http://nodered.org) nodes to Access ADVANTECH platform HW function by node-susiiot & node-susi.
 
 ## Install
 Use npm to command to install this package locally in the Node-RED modules directory
 ```bash
-npm install node-red-node-susi 
+npm install node-red-contrib-susi 
 ```
 or install in it globally with the command
 ```bash
-npm install node-red-node-susi -g 
+npm install node-red-contrib-susi -g 
 ```
 
 ## Nodes included in the package
@@ -25,7 +25,7 @@ npm install node-red-node-susi -g
 **IoT Control** Set platfom function's Data from node-susiiot .
 
 ## Usage example
-![Flow](./node-red-node-susi_example.png)
+![Flow](./node-red-contrib-susi_example.png)
 Simple usage of the plugin in Node-RED, a message with ON or 1 will turn on the node, otherwise a message with OFF or 0 will turn off the node.
 ```json
 [
