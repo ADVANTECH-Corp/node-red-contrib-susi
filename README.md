@@ -25,7 +25,7 @@ npm install node-red-node-susi -g
 **IoT Control** Set platfom function's Data from node-susiiot .
 
 ## Usage example
-![Flow](https://raw.githubusercontent.com/ADVANTECH-Corp/node-red-node-susi/master/node-red-node-susi_example.png)
+![Flow](./node-red-node-susi_example.png)
 Simple usage of the plugin in Node-RED, a message with ON or 1 will turn on the node, otherwise a message with OFF or 0 will turn off the node.
 ```json
 [
