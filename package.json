@@ -1,0 +1,39 @@
+{
+  "author": {
+    "name": "Neo Lo",
+    "email": "brendanpmurray@gmail.com",
+    "url": "http://coolfore.com/"
+  },
+  "name": "node-red-node-susi",
+  "version": "0.0.1",
+  "description": "Node-red node for SUSI",
+  "dependencies": {
+     "node-susi": "0.0.1",
+     "node-susiiot": "0.0.1"
+ },
+  "repository": {
+    "url": "https://github.com/ADVANTECH-Corp/node-red-node-susi"
+  },
+  "keywords": [
+    "ADVANTECH",
+    "SUSIIoT",
+    "SUSI",
+    "API"
+  ],
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/ADVANTECH-Corp/node-red-node-susi/issues"
+  },
+  "homepage": "https://github.com/ADVANTECH-Corp/node-red-node-susi",
+  "node-red": {
+    "nodes": {
+      "SUSI-Temp": "SUSI-node/SUSI-Temp.js",
+      "SUSI-Volt": "SUSI-node/SUSI-Volt.js",
+      "SUSI-Fan": "SUSI-node/SUSI-Fan.js",
+      "SUSIIoT-Info": "SUSIIoT-node/SUSIIoT-Info.js",
+      "SUSIIoT-Data": "SUSIIoT-node/SUSIIoT-Data.js",
+      "SUSIIoT-Control": "SUSIIoT-node/SUSIIoT-Control.js"
+       
+    }
+  }
+}
