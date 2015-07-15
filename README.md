@@ -331,7 +331,7 @@ Simple usage of the plugin in Node-RED, a message with ON or 1 will turn on the 
 |------------------------------------------------------|-----------|---------|------------------------------------------------------|
 | ADVANTECH  AIMB-582      | YES     |                                                      | 
 
-All ADVANTECH platform that ported SUSI4 are should be working.
+All Advantech platform ported SUSI4 driver  should be able to support.
 
 ## History
 - 0.0.1 - April 2015 : Initial Release
