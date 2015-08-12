@@ -14,16 +14,15 @@
   limitations under the License.
 -->
 <script type="text/javascript">
-function ws_oneditprepare() {
-    $("#class1GPIO").hide();            
+function ws_oneditprepare() {           
     $("#node-input-class0").change(function(){
-        if( $("#node-input-class0").val() === 'Hardware Monitor') {
+        if( $("#node-input-class0").val() == 'Hardware Monitor') {
             $("#rowHWM").show();
         }
         else {
             $("#rowHWM").hide();
         }
-        if( $("#node-input-class0").val() === 'GPIO') {
+        if( $("#node-input-class0").val() == 'GPIO') {
             $("#rowGPIO").show();
         }
         else {

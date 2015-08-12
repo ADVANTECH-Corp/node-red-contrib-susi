@@ -64,6 +64,7 @@ function ws_oneditprepare() {
            <option value="Temperature">Temperature</option>
            <option value="Voltage">Voltage</option>
            <option value="Fan Speed">Fan Speed</option>
+		   <option value="Current">Current</option>
         </select>
     </div>
     
@@ -106,7 +107,7 @@ function ws_oneditprepare() {
         defaults: {               // defines the editable properties of the node
             name:    {value: ""},
             topic:   {value: "SUSIIoT Data"},
-            class0:  {value: "Hardware Monitor"},
+            class0:  {value: "All"},
             class1HWM:  {value: "All"},
             class1GPIO:  {value: "All"}
         },

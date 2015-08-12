@@ -1,0 +1,153 @@
+<!--
+  Copyright 2015 Brendan Murray
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<!-- Define the edit dialog.                       -->
+<script type="text/x-red" data-template-name="SUSI-HardwareMonitor">
+
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <br/>
+
+    <div class="form-row">
+        <label for="node-input-functiontype"><i class="fa fa-list"></i> Type</label>
+        <select id="node-input-functiontype" onchange="ChangeIndex()">
+           <option value="0">Temperature</option>
+           <option value="1">FanSpeed</option>
+           <option value="2">Voltage</option>
+		   <option value="3">Current</option>
+        </select>
+    </div>
+    <br/>
+
+    <div class="form-row">
+        <label for="node-input-index"><i class="fa fa-list"></i> Index</label>
+        <select id="node-input-index">
+        </select>
+    </div>
+    <br/>
+
+    <!-- Node name -->
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="SUSI-HardwareMonitor">
+   <p>Node to retrieve the status of a ADVANTECH platform by SUSI, either at
+   startup, or at a predefined period, determined by an input message</p>
+   <p>Outputs a <b>msg</b> containing <b>msg.topic</b> which defaults to the
+   sensor name, and <b>msg.payload</b> containing the reading.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('SUSI-HardwareMonitor', {
+        category: 'ADVANTECH', // the palette category
+        defaults: {               // defines the editable properties of the node
+            name:    {value: ""},
+            topic:   {value: "SUSI-HardwareMonitor"},
+            dht:     {value: 22},
+            functiontype: {value: 0},
+            index:     {value: 0}
+        },
+        inputs:  1,              // set the number of inputs - only 0 or 1
+        outputs: 1,              // set the number of outputs - 0 to n
+        color:   "#C0DEED",
+        icon:    "dht.png",   // saved in  icons/myicon.png
+		paletteLabel: "HardwareMonitor",
+        label:   function() {    // sets the default label contents
+                   return this.name||this.topic||"SUSI-HardwareMonitor";
+                 },
+        labelStyle: function() { // sets the class to apply to the label
+                   return this.name ? "node_label_italic": "";
+                 }
+    });
+	
+	function ChangeIndex(){
+	var tp = $("#node-input-functiontype").val();
+	var list = "";
+	if(tp == 0){
+	list = '<option value="0">CPU</option>'+
+		   '<option value="1">Chipset</option>'+
+		   '<option value="2">System</option>'+
+		   '<option value="3">CPU2</option>'+
+		   '<option value="4">OEM0</option>'+
+		   '<option value="5">OEM1</option>'+
+		   '<option value="6">OEM2</option>'+
+		   '<option value="7">OEM3</option>'+
+		   '<option value="8">OEM4</option>'+
+           '<option value="9">OEM5</option>';
+	} else if(tp == 1){
+	list = '<option value="0">CPU</option>'+
+           '<option value="1">System</option>'+
+           '<option value="2">CPU2</option>'+
+           '<option value="3">OEM0</option>'+
+		   '<option value="4">OEM1</option>'+
+		   '<option value="5">OEM2</option>'+
+		   '<option value="6">OEM3</option>'+
+		   '<option value="7">OEM4</option>'+
+		   '<option value="8">OEM5</option>'+
+           '<option value="9">OEM6</option>';
+	} else if(tp == 2){
+	list = '<option value="0">VCore</option>'+
+		   '<option value="1">VCore2</option>'+
+           '<option value="2">2.5V</option>'+
+           '<option value="3">3.3V</option>'+
+           '<option value="4">5V</option>'+
+           '<option value="5">12V</option>'+
+           '<option value="6">5VSB</option>'+
+           '<option value="7">3VSB</option>'+
+           '<option value="8">VBAT</option>'+
+           '<option value="9">5NV</option>'+
+           '<option value="10">12NV</option>'+
+           '<option value="11">VTT</option>'+
+           '<option value="12">24V</option>'+
+		   '<option value="13">DC</option>'+
+		   '<option value="14">DCSTBY</option>'+
+		   '<option value="15">VBATLI</option>'+
+		   '<option value="16">OEM0</option>'+
+		   '<option value="17">OEM1</option>'+
+		   '<option value="18">OEM2</option>'+
+		   '<option value="19">OEM3</option>'+
+		   '<option value="20">1.05V</option>'+
+		   '<option value="21">1.5V</option>'+
+           '<option value="22">1.8V</option>';
+	}else if(tp == 3){
+	list = '<option value="0">OEM0</option>'+
+		   '<option value="1">OEM1</option>'+
+           '<option value="2">OEM2</option>';	
+	}
+	$("#node-input-index").html(list);
+	};
+	
+	$(function(){
+	//alert($("#node-input-functiontype").size())
+	//$("#node-input-functiontype").html('<option value="0">Temperature</option>');
+	//$("#Current").hide();
+	});
+	
+	//function pageLoad(){
+	//alert($("#node-input-functiontype").size())
+	//}
+	
+</script>
+
+

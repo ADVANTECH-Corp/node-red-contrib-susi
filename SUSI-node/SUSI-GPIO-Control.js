@@ -15,28 +15,30 @@
  **/
 
 // Dependency - dht sensor package
-var susiIoTLib = require("node-susiiot");
+var susiLib = require("node-susi");
 
 
 module.exports = function(RED) {
    "use strict";
 
    // The main node definition - most things happen in here
-   function susiIoTControl(config) {
+   function susiGPIO(config) {
       // Create a RED node
       RED.nodes.createNode(this, config);
 
       // Store local copies of the node configuration (as defined in the .html)
       var node = this;
       
-      this.topic = config.topic;
+      var getValue = 0;
 
-      
+      this.topic = config.topic;
+	  
       // Read the data & return a message object
       this.read = function(msgIn) {
          var msg = msgIn ? msgIn : {};
-
-         msg.payload  = msg.payload + "\n" + susiIoTLib.setData(msg.payload);
+         
+		 msg.payload  = susiLib.setGPIO(config.pintype, config.pin, msg.payload);
+		 
          msg.topic    = node.topic || node.name;
 
          return msg;
@@ -58,5 +60,5 @@ module.exports = function(RED) {
    }
 
    // Register the node by name.
-   RED.nodes.registerType("SUSIIoT-Control", susiIoTControl);
+   RED.nodes.registerType("SUSI-GPIO-Control", susiGPIO);
 }
