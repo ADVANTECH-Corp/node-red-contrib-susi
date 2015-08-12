@@ -5,7 +5,7 @@
     "url": "http://coolfore.com/"
   },
   "name": "node-red-contrib-susi",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Node-red node for SUSI",
   "dependencies": {
     "node-susi": "^0.0.4",
