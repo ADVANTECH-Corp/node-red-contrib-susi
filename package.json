@@ -37,28 +37,5 @@
       "SUSIIoT-Data": "SUSIIoT-node/SUSIIoT-Data.js",
       "SUSIIoT-Control": "SUSIIoT-node/SUSIIoT-Control.js"
     }
-  },
-  "gitHead": "164f1d8b25bb1acff1c8d2e3405c665fc33a6393",
-  "_id": "node-red-contrib-susi@0.0.5",
-  "scripts": {},
-  "_shasum": "45223a84647723eeae9566ec93a85864a14f4bf7",
-  "_from": "node-red-contrib-susi@*",
-  "_npmVersion": "1.4.21",
-  "_npmUser": {
-    "name": "neo.lo",
-    "email": "neo.lo@advantech.com.tw"
-  },
-  "maintainers": [
-    {
-      "name": "neo.lo",
-      "email": "neo.lo@advantech.com.tw"
-    }
-  ],
-  "dist": {
-    "shasum": "45223a84647723eeae9566ec93a85864a14f4bf7",
-    "tarball": "http://registry.npmjs.org/node-red-contrib-susi/-/node-red-contrib-susi-0.0.5.tgz"
-  },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/node-red-contrib-susi/-/node-red-contrib-susi-0.0.5.tgz",
-  "readme": "ERROR: No README data found!"
+  }
 }
