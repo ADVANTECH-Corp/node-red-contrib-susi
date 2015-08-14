@@ -5,11 +5,11 @@
     "url": "http://coolfore.com/"
   },
   "name": "node-red-contrib-susi",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Node-red node for SUSI",
   "dependencies": {
-    "node-susi": "^0.0.4",
-    "node-susiiot": "^0.0.5"
+    "node-susi": "0.0.x",
+    "node-susiiot": "0.0.x"
   },
   "repository": {
     "url": "git+https://github.com/ADVANTECH-Corp/node-red-contrib-susi.git"
