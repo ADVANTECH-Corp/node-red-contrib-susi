@@ -13,27 +13,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<script type="text/javascript">
-function ws_oneditprepare() {           
-    $("#node-input-class0").change(function(){
-        if( $("#node-input-class0").val() == 'Hardware Monitor') {
-            $("#rowHWM").show();
-        }
-        else {
-            $("#rowHWM").hide();
-        }
-        if( $("#node-input-class0").val() == 'GPIO') {
-            $("#rowGPIO").show();
-        }
-        else {
-            $("#rowGPIO").hide();
-        }
-    });
-
-}
-
-</script>
-
 <!-- Define the edit dialog.                       -->
 <script type="text/x-red" data-template-name="SUSIIoT-Info">
 
@@ -44,45 +23,19 @@ function ws_oneditprepare() {
     <br/>
 
     <div class="form-row">
-        <label for="node-input-class0"><i class="fa fa-dot-circle-o"></i>Feature</label>
-        <select id="node-input-class0">
-           <option value="All">All</option>
-           <option value="Platform Information">Platform Information</option>
-           <option value="Hardware Monitor">Hardware Monitor</option>
-           <option value="GPIO">GPIO</option>
-           <option value="Backlight">Backlight</option>
-           <option value="SUSIIoT Information">SUSIIoT Information</option>
+        <label for="node-input-feature"><i class="fa fa-dot-circle-o"></i> Feature</label>
+        <select id="node-input-feature" onchange="FeatureChangeIndex()">
         </select>
     </div>
     <br/>
+    
+	<div class="form-row" id="row-featuretype">
+        <label for="node-input-featuretype"><i class="fa fa-dot-circle-o"></i> Type</label>
+        <select id="node-input-featuretype">
+        </select>
+    </div>
+	<br/>
 
-    <div class="form-row" id="rowHWM">
-        <label for="node-input-class1HWM"><i class="fa fa-dot-circle-o"></i>Type</label>
-        <select id="node-input-class1HWM">
-           <option value="All">All</option>
-           <option value="Temperature">Temperature</option>
-           <option value="Voltage">Voltage</option>
-           <option value="Fan Speed">Fan Speed</option>
-        </select>
-    </div>
-    
-    <div class="form-row" id="rowGPIO">
-        <label for="node-input-class1GPIO"><i class="fa fa-dot-circle-o"></i>Pin</label>
-        <select id="node-input-class1GPIO">
-           <option value="All">All</option>
-           <option value="GPIO00">GPIO00</option>
-           <option value="GPIO01">GPIO01</option>
-           <option value="GPIO02">GPIO02</option>
-           <option value="GPIO03">GPIO03</option>
-           <option value="GPIO04">GPIO04</option>
-           <option value="GPIO05">GPIO05</option>
-           <option value="GPIO06">GPIO06</option>
-           <option value="GPIO07">GPIO07</option>
-        </select>
-    </div>
-    
-    <br/>
-    
     <!-- Node name -->
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -105,9 +58,8 @@ function ws_oneditprepare() {
         defaults: {               // defines the editable properties of the node
             name:    {value: ""},
             topic:   {value: "SUSIIoT Info"},
-            class0:  {value: "Hardware Monitor"},
-            class1HWM:  {value: "All"},
-            class1GPIO:  {value: "All"}
+            feature:  {value: ""},
+			featuretype: {value: ""}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1
         outputs: 1,              // set the number of outputs - 0 to n
@@ -120,6 +72,47 @@ function ws_oneditprepare() {
         labelStyle: function() { // sets the class to apply to the label
                    return this.name ? "node_label_italic": "";
                  },
-        oneditprepare: ws_oneditprepare
+        oneditprepare: ws_oneditprepare_Info
     });
+	
+	var typelist = [];
+	
+	function FeatureChangeIndex() {
+	var list = typelist[$("#node-input-feature").val()];
+	if (list != null && list != "") {
+		$("#node-input-featuretype").html(list);
+		$("#row-featuretype").show();
+	}
+	else {
+		var temp = "All";
+		$("#node-input-featuretype").val(temp);
+		$("#row-featuretype").hide();
+	}
+	}
+	
+	function ws_oneditprepare_Info() {  
+	featuretmp = this.feature;
+	featuretypetmp = this.featuretype;
+	$.getJSON('SUSIIoT',function(data) {
+		featurelist = "<option value=All>All</option>";
+		for (var i=0; i<data.length; i++) {
+			featurelist = featurelist + '<option value="' + data[i][0] + '">' + data[i][0] +'</option>';
+			if(data[i].length > 1)
+				typelist[data[i][0]] = "<option value=All>All</option>";
+			for (var j=1; j<data[i].length; j++) {
+			typelist[data[i][0]] = typelist[data[i][0]] + '<option value="' + data[i][j] + '">' + data[i][j] +'</option>';
+			}
+		}
+		
+		$("#node-input-feature").html(featurelist);
+		$("#node-input-feature").val(featuretmp);
+		FeatureChangeIndex();
+		
+		var temp = "All";
+		if (typelist[featuretmp] != 'undefined')
+			$("#node-input-featuretype").val(featuretypetmp);
+		else
+			$("#node-input-featuretype").val(temp);
+    });
+	}
 </script>

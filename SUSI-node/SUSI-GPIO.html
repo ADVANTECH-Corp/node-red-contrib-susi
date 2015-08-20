@@ -36,14 +36,6 @@
     <div class="form-row">
         <label for="node-input-pin"><i class="fa fa-list"></i>Index</label>
         <select id="node-input-pin">
-           <option value="0">0</option>
-           <option value="1">1</option>
-           <option value="2">2</option>
-           <option value="3">3</option>
-           <option value="4">4</option>
-           <option value="5">5</option>
-           <option value="6">6</option>
-           <option value="7">7</option>
         </select>
     </div>
     <br/>
@@ -83,6 +75,102 @@
                  },
         labelStyle: function() { // sets the class to apply to the label
                    return this.name ? "node_label_italic": "";
-                 }
+                 },
+		oneditprepare: ws_oneditprepare
     });
+	
+	var pintemp;
+	function ws_oneditprepare() { 
+	pintemp = this.pin;
+	$.getJSON('SUSI-GPIO',function(data) {
+		pinlist = "";
+		for (var i=0; i<128; i++) {
+		if(data[i].toString().indexOf("failed") == -1)
+		pinlist = pinlist + "<option value=" + i + ">" + i + "</option>";
+		}
+		
+		$("#node-input-pin").html(pinlist);
+		$("#node-input-pin").val(pintemp);
+	});
+	};
+</script>
+
+<!-- Define the edit dialog.                       -->
+<script type="text/x-red" data-template-name="SUSI-GPIO-Control">
+
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <br/>
+
+	 <div class="form-row">
+        <label for="node-input-pintype"><i class="fa fa-list"></i> Type</label>
+        <select id="node-input-pintype">
+           <option value="0">Direction</option>
+           <option value="1">Level</option>
+        </select>
+    </div>
+    <br/>
+	
+    <div class="form-row">
+        <label for="node-input-pin"><i class="fa fa-list"></i>Index</label>
+        <select id="node-input-pin">
+        </select>
+    </div>
+    <br/>
+
+    <!-- Node name -->
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="SUSI-GPIO-Control">
+   <p>Node to retrieve the status of a ADVANTECH platform by SUSI, either at
+   startup, or at a predefined period, determined by an input message</p>
+   <p>Outputs a <b>msg</b> containing <b>msg.topic</b> which defaults to the
+   sensor name, and <b>msg.payload</b> containing the reading.</p>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('SUSI-GPIO-Control', {
+        category: 'ADVANTECH', // the palette category
+        defaults: {               // defines the editable properties of the node
+            name:    {value: ""},
+            topic:   {value: "SUSI GPIO Control"},
+            pintype: {value: 0},
+            pin:     {value: 0}
+        },
+        inputs:  1,              // set the number of inputs - only 0 or 1
+        outputs: 1,              // set the number of outputs - 0 to n
+        color:   "#C0DEED",
+        icon:    "serial.png",   // saved in  icons/myicon.png
+		align: "right",
+        paletteLabel: "GPIO",
+        label:   function() {    // sets the default label contents
+                   return this.name||this.topic||"SUSI-GPIO-Control";
+                 },
+        labelStyle: function() { // sets the class to apply to the label
+                   return this.name ? "node_label_italic": "";
+                 },
+		oneditprepare: ws_oneditprepare
+    });
+	
+	var pintemp;
+	function ws_oneditprepare() { 
+	pintemp = this.pin;
+	$.getJSON('SUSI-GPIO',function(data) {
+		pinlist = "";
+		for (var i=0; i<128; i++) {
+		if(data[i].toString().indexOf("failed") == -1)
+		pinlist = pinlist + "<option value=" + i + ">" + i + "</option>";
+		}
+		
+		$("#node-input-pin").html(pinlist);
+		$("#node-input-pin").val(pintemp);
+	});
+	};
 </script>

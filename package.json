@@ -5,7 +5,7 @@
     "url": "http://coolfore.com/"
   },
   "name": "node-red-contrib-susi",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Node-red node for SUSI",
   "dependencies": {
     "node-susi": "0.0.x",
@@ -29,10 +29,8 @@
     "nodes": {
 	  "SUSI-HardwareMonitor": "SUSI-node/SUSI-HardwareMonitor.js",
 	  "SUSI-GPIO": "SUSI-node/SUSI-GPIO.js",
-	  "SUSI-GPIO-Control": "SUSI-node/SUSI-GPIO-Control.js",
 	  "SUSI-Backlight": "SUSI-node/SUSI-Backlight.js",
-	  "SUSI-Backlight-Control": "SUSI-node/SUSI-Backlight-Control.js",
-	  "SUSI-WatchDog-Control": "SUSI-node/SUSI-WatchDog-Control.js",
+	  "SUSI-WatchDog": "SUSI-node/SUSI-WatchDog.js",
       "SUSIIoT-Info": "SUSIIoT-node/SUSIIoT-Info.js",
       "SUSIIoT-Data": "SUSIIoT-node/SUSIIoT-Data.js",
       "SUSIIoT-Control": "SUSIIoT-node/SUSIIoT-Control.js"

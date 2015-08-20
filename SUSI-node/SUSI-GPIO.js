@@ -20,51 +20,92 @@ var susiLib = require("node-susi");
 
 module.exports = function(RED) {
    "use strict";
-
    // The main node definition - most things happen in here
-   function susiGPIO(config) {
-      // Create a RED node
-      RED.nodes.createNode(this, config);
-
-      // Store local copies of the node configuration (as defined in the .html)
-      var node = this;
+    function susiGPIO(config) {
+		// Create a RED node
+		RED.nodes.createNode(this, config);
+		
+        // Store local copies of the node configuration (as defined in the .html)
+        var node = this;
       
-      var getValue = 0;
+        var getValue = 0;
 
-      this.topic = config.topic;
+        this.topic = config.topic;
 	  
-      // Read the data & return a message object
-      this.read = function(msgIn) {
-         var msg = msgIn ? msgIn : {};
+        // Read the data & return a message object
+        this.read = function(msgIn) {
+			var msg = msgIn ? msgIn : {};
          
-//if (config.pintype == 0) {        // Direction
-//	msg.payload  = susiLib.getGPIODirection(config.pin);
-//} else if (config.pintype == 1) { // Level
-//	msg.payload  = susiLib.getGPIOLevel(config.pin);
-//}
-//
-		 msg.payload  = susiLib.getGPIO(config.pintype, config.pin);
+			msg.payload  = susiLib.getGPIO(config.pintype, config.pin);
 		 
-         msg.topic    = node.topic || node.name;
+			msg.topic    = node.topic || node.name;
 
-         return msg;
-      };
+			return msg;
+        };
 
-      // respond to inputs....
-      this.on('input', function (msg) {
-         msg = this.read(msg);
+		// respond to inputs....
+		this.on('input', function (msg) {
+			msg = this.read(msg);
          
-         if (msg)
-            node.send(msg);
-      });
+			if (msg)
+				node.send(msg);
+		});
 
-   //   var msg = this.read();
+    //   var msg = this.read();
 
-   //   // send out the message to the rest of the workspace.
-   //   if (msg)
-   //      this.send(msg);
-   }
+    //   // send out the message to the rest of the workspace.
+    //   if (msg)
+    //      this.send(msg);
+    }
 
-   // Register the node by name.
-   RED.nodes.registerType("SUSI-GPIO", susiGPIO);
+    // Register the node by name.
+    RED.nodes.registerType("SUSI-GPIO", susiGPIO);
+	
+	function susiGPIOControl(config) {
+		// Create a RED node
+		RED.nodes.createNode(this, config);
+
+		// Store local copies of the node configuration (as defined in the .html)
+		var node = this;
+		
+		var getValue = 0;
+
+		this.topic = config.topic;
+		
+		// Read the data & return a message object
+		this.read = function(msgIn) {
+			var msg = msgIn ? msgIn : {};
+				 
+			msg.payload  = susiLib.setGPIO(config.pintype, config.pin, msg.payload);
+				 
+			msg.topic    = node.topic || node.name;
+
+			return msg;
+		};
+
+		  // respond to inputs....
+		this.on('input', function (msg) {
+			msg = this.read(msg);
+			 
+			if (msg)
+				node.send(msg);
+		});
+
+    //   var msg = this.read();
+
+    //   // send out the message to the rest of the workspace.
+    //   if (msg)
+    //      this.send(msg);
+    }
+
+    // Register the node by name.
+    RED.nodes.registerType("SUSI-GPIO-Control", susiGPIOControl);
+	
+	RED.httpAdmin.get("/SUSI-GPIO", function(req,res) {
+		var Items = [];
+		for (var i=0; i<128; i++) {
+			Items.push(susiLib.getGPIO(2, i));
+		}
+		res.send(Items);
+    });
 }

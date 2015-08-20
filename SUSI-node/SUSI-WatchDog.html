@@ -27,9 +27,6 @@
 	<div class="form-row">
         <label for="node-input-pintype"><i class="fa fa-list"></i> Type</label>
         <select id="node-input-pintype">
-           <option value="0">Watchdog 1</option>
-           <option value="1">Watchdog 2</option>
-		   <option value="2">Watchdog 3</option>
         </select>
     </div>
     <br/>
@@ -46,7 +43,7 @@
     </div>
 	<br/>
 
-	<div class="form-row">
+	<div class="form-row" id="row-eventtype">
         <label for="node-input-eventtype"><i class="fa fa-list"></i> Event Type</label>
         <select id="node-input-eventtype">
            <option value="0">None</option>
@@ -57,7 +54,7 @@
     </div>
 	<br/>
 	
-	<div class="form-row">
+	<div class="form-row" id="row-eventtime">
         <label for="node-input-eventtime"><i class="fa fa-tasks"></i> Event time</label>
         <input type="text" id="node-input-resettime" placeholder="0">
     </div>
@@ -106,12 +103,52 @@
         outputs: 1,              // set the number of outputs - 0 to n
         color:   "#C0DEED",
         icon:    "timer.png",   // saved in  icons/myicon.png
-        paletteLabel: "WatchDog Control",
+		align: "right",
+        paletteLabel: "WatchDog",
         label:   function() {    // sets the default label contents
                    return this.name||this.topic||"SUSI-WatchDog-Control";
                  },
         labelStyle: function() { // sets the class to apply to the label
                    return this.name ? "node_label_italic": "";
-                 }
+                 },
+		oneditprepare: ws_oneditprepare
     });
+	
+	function ChangeIndex(){
+	var tp = $("#node-input-pintype").val();
+		if(eventtypelist[tp] == 0 ) {
+		$("#row-eventtype").hide();
+		$("#row-eventtime").hide();
+		}
+		else {
+		$("#row-eventtype").show();
+		$("#row-eventtime").show();
+		}
+	};
+	
+	var pintypetemp = "";
+	var eventtypetemp = "";
+	var eventtypelist =[];
+	function ws_oneditprepare() { 
+	pintypetemp = this.pintype;
+	eventtypetemp = this.eventtype;
+	$.getJSON('SUSI-WatchDog',function(data) {
+		pintypelist = "";
+		for (var i=0; i<3; i++) {
+			if(data[i].toString().indexOf("failed") == -1){
+				var k = i + 1;
+				pintypelist = pintypelist + "<option value=" + i + ">" + "WatchDog " + k +"</option>";
+			}
+			if(data[i] > 0)
+				eventtypelist[i] = 1;
+			else
+				eventtypelist[i] = 0;
+		}
+		
+		$("#node-input-pintype").html(pintypelist);
+		$("#node-input-pintype").val(pintypetemp);
+		ChangeIndex();
+		$("#node-input-eventtype").val(eventtypetemp);
+	});
+	};
 </script>

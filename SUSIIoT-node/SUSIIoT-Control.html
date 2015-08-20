@@ -46,14 +46,12 @@
         defaults: {               // defines the editable properties of the node
             name:    {value: ""},
             topic:   {value: "SUSIIoT Control"},
-            class0:  {value: "Hardware Monitor"},
-            class1HWM:  {value: "All"},
-            class1GPIO:  {value: "All"}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1
         outputs: 1,              // set the number of outputs - 0 to n
         color:   "#FFAAAA",
         icon:    "white-globe.png",   // saved in  icons/myicon.png
+		align: "right",
         paletteLabel: "IoT Control",
         label:   function() {    // sets the default label contents
                    return this.name||this.topic||"SUSIIoT-Control";
