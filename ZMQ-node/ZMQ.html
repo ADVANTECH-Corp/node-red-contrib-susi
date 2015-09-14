@@ -13,9 +13,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-
 <!-- Define the edit dialog.                       -->
-<script type="text/x-red" data-template-name="SUSIIoT-Control">
+<script type="text/x-red" data-template-name="ZMQ">
 
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
@@ -23,7 +22,13 @@
     </div>
     <br/>
 
-    
+    <div class="form-row">
+        <label for="node-input-connect"><i class="fa fa-list"></i> Connect</label>
+        <input type="text" id="node-input-connect" placeholder="tcp://127.0.0.1:8899">
+        </select>
+    </div>
+	 <br/>
+	 
     <!-- Node name -->
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -33,31 +38,35 @@
 
 
 <!-- Next, some simple help text is provided for the node.                   -->
-<script type="text/x-red" data-help-name="SUSIIoT-Control">
-   <p>Node to retrieve the status of a ADVANTECH platform by SUSIIoT, either at
-   startup, or at a predefined period, determined by an input message</p>
-   <p>Outputs a <b>msg</b> containing <b>msg.topic</b> which defaults to the
-   sensor name, and <b>msg.payload</b> containing the reading.</p>
+<script type="text/x-red" data-help-name="ZMQ">
+	<p>ZMQ Node to synchronization the status of a application, process or service</p>
+	<p><b>This is how the Node will work:</b>
+	<br>The Node starts up and waits for all subscribers to connect.
+	<br>When the Node has all subscribers connected, it starts to publish data and wait client send request.
+	<br>When the Node receive client request, it will outputs a <b>msg</b> containing <b>msg.payload</b> which from client request.
+	<br><br><b>TCP port define</b>
+	<br>TCP subscribers port:22220
+	<br>TCP client port:22222</p>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('SUSIIoT-Control', {
+    RED.nodes.registerType('ZMQ', {
         category: 'ADVANTECH', // the palette category
         defaults: {               // defines the editable properties of the node
             name:    {value: ""},
-            topic:   {value: "SUSIIoT Control"},
+            topic:   {value: "ZMQ"},
+			connect: {value: ""}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1
         outputs: 1,              // set the number of outputs - 0 to n
-        color:   "#FFAAAA",
+        color:   "#E7E7AE",
         icon:    "white-globe.png",   // saved in  icons/myicon.png
-		align: "right",
-        paletteLabel: "IoT Control",
+        paletteLabel: "ZMQ",
         label:   function() {    // sets the default label contents
-                   return this.name||this.topic||"SUSIIoT-Control";
+                   return this.name||this.topic||"ZMQ";
                  },
         labelStyle: function() { // sets the class to apply to the label
                    return this.name ? "node_label_italic": "";
-                 },
+                 }
     });
 </script>

@@ -38,7 +38,12 @@ module.exports = function(RED) {
 		this.read = function(msgIn) {
 			var msg = msgIn ? msgIn : {};
 
-			msg.payload = susiLib.getVgaBacklight(config.pintype, config.pin);
+			if (typeof msg.functiontype !== 'undefined' && msg.functiontype !== '')
+				config.functiontype = msg.functiontype;
+			if (typeof msg.index !== 'undefined' && msg.index !== '')
+				config.index = msg.index;
+			
+			msg.payload = susiLib.getVgaBacklight(config.functiontype, config.index);
 		
 			msg.topic    = node.topic || node.name;
 
@@ -80,7 +85,14 @@ module.exports = function(RED) {
 		this.read = function(msgIn) {
 			var msg = msgIn ? msgIn : {};
 
-			msg.payload = susiLib.setVgaBacklight(config.pintype, config.pin, msg.payload);
+			if (typeof msg.functiontype !== 'undefined' && msg.functiontype !== '')
+				config.functiontype = msg.functiontype;
+			if (typeof msg.index !== 'undefined' && msg.index !== '')
+				config.index = msg.index;
+			if (typeof msg.setvalue !== 'undefined' && msg.setvalue !== '')
+				config.setvalue = msg.setvalue;
+			
+			msg.payload = susiLib.setVgaBacklight(config.functiontype, config.index, config.setvalue);
 		
 			msg.topic    = node.topic || node.name;
 

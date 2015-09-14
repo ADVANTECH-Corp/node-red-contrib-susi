@@ -44,6 +44,14 @@
     </div>
 </script>
 
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="SUSIIoT-Data">
+   <p>Node to retrieve the status of a ADVANTECH platform by SUSIIoT, either at
+   startup, or at a predefined period, determined by an input message</p>
+   <p>Outputs a <b>msg</b> containing <b>msg.topic</b> which defaults to the
+   sensor name, and <b>msg.payload</b> containing the reading.</p>
+</script>
+
 <script type="text/javascript">
     RED.nodes.registerType('SUSIIoT-Data', {
         category: 'ADVANTECH', // the palette category

@@ -25,15 +25,15 @@
     <br/>
 
     <div class="form-row">
-        <label for="node-input-pintype"><i class="fa fa-list"></i> Type</label>
-        <select id="node-input-pintype" onchange="BacklightChangeIndex()">
+        <label for="node-input-functiontype"><i class="fa fa-list"></i> Type</label>
+        <select id="node-input-functiontype" onchange="BacklightChangeIndex()">
         </select>
     </div>
     <br/>
 
     <div class="form-row">
-        <label for="node-input-pin"><i class="fa fa-list"></i> Index</label>
-        <select id="node-input-pin">
+        <label for="node-input-index"><i class="fa fa-list"></i> Index</label>
+        <select id="node-input-index">
         </select>
     </div>
     <br/>
@@ -61,8 +61,8 @@
             name:    {value: ""},
             topic:   {value: "SUSI-Backlight"},
             dht:     {value: 22},
-            pintype: {value: 0},
-            pin:     {value: 1}
+            functiontype: {value: 0},
+            index:     {value: 1}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1
         outputs: 1,              // set the number of outputs - 0 to n
@@ -79,45 +79,45 @@
     });
 	
 	function BacklightChangeIndex(){
-	var tp = $("#node-input-pintype").val();
+	var tp = $("#node-input-functiontype").val();
 	var list = "";
 	if(tp == 0) {
-	list = pinlist[0];
+	list = indexlist[0];
 	} else if(tp == 1) {
-	list = pinlist[1];
+	list = indexlist[1];
 	} else if(tp == 2) {
-	list = pinlist[2];
+	list = indexlist[2];
 	}
-	$("#node-input-pin").html(list);
+	$("#node-input-index").html(list);
 	};
 	
-	var pintypetemp = "";
-	var pintemp = "";
-	var pinlist =[];
+	var functiontypetemp = "";
+	var indextemp = "";
+	var indexlist =[];
 	function ws_oneditprepare_Backlight() { 
-	pintypetemp = this.pintype;
-	pintemp = this.pin;
+	functiontypetemp = this.functiontype;
+	indextemp = this.index;
 	$.getJSON('SUSI-Backlight',function(data) {
-		pintypelist = "";
+		functiontypelist = "";
 		for (var i=0; i<3; i++) {
-			pinlist[i] = [];
+			indexlist[i] = [];
 			if(data[i][0].toString().indexOf("failed") == -1)
-				pinlist[i] = pinlist[i] + "<option value='0'>Backlight</option>";
+				indexlist[i] = indexlist[i] + "<option value='0'>Backlight</option>";
 			if(data[i][1].toString().indexOf("failed") == -1){
 				var k = i + 1;
-				pintypelist = pintypelist + "<option value=" + i + ">" + "Backlight " + k + "</option>";
-				pinlist[i] = pinlist[i] + "<option value='1'>Brightness</option>";
+				functiontypelist = functiontypelist + "<option value=" + i + ">" + "Backlight " + k + "</option>";
+				indexlist[i] = indexlist[i] + "<option value='1'>Brightness</option>";
 				}
 			if(data[i][2].toString().indexOf("failed") == -1)
-				pinlist[i] = pinlist[i] + "<option value='2'>Freqency</option>";
+				indexlist[i] = indexlist[i] + "<option value='2'>Freqency</option>";
 			if(data[i][3].toString().indexOf("failed") == -1)
-				pinlist[i] = pinlist[i] + "<option value='3'>Polarity</option>";
+				indexlist[i] = indexlist[i] + "<option value='3'>Polarity</option>";
 		}
 		
-		$("#node-input-pintype").html(pintypelist);
-		$("#node-input-pintype").val(pintypetemp);
+		$("#node-input-functiontype").html(functiontypelist);
+		$("#node-input-functiontype").val(functiontypetemp);
 		BacklightChangeIndex();
-		$("#node-input-pin").val(pintemp);
+		$("#node-input-index").val(indextemp);
 		 
 	});
 	};
@@ -132,15 +132,21 @@
     <br/>
 
     <div class="form-row">
-        <label for="node-input-pintype"><i class="fa fa-list"></i> Type</label>
-        <select id="node-input-pintype" onchange ="BacklightControlChangeIndex()"></select>
+        <label for="node-input-functiontype"><i class="fa fa-list"></i> Type</label>
+        <select id="node-input-functiontype" onchange ="BacklightControlChangeIndex()"></select>
     </div>
     <br/>
 
     <div class="form-row">
-        <label for="node-input-pin"><i class="fa fa-list"></i> Index</label>
-        <select id="node-input-pin">
+        <label for="node-input-index"><i class="fa fa-list"></i> Index</label>
+        <select id="node-input-index">
         </select>
+    </div>
+    <br/>
+	
+	<div class="form-row">
+        <label for="node-input-setvalue"><i class="fa fa-list"></i> Value</label>
+        <input type="text" id="node-input-setvalue">
     </div>
     <br/>
 
@@ -156,7 +162,7 @@
    <p>Node to retrieve the status of a ADVANTECH platform by SUSI, either at
    startup, or at a predefined period, determined by an input message</p>
    <p>Outputs a <b>msg</b> containing <b>msg.topic</b> which defaults to the
-   sensor name, and <b>msg.payload</b> containing the reading.</p>
+   sensor name, and <b>msg.setvalue</b> containing the reading.</p>
 </script>
 <script type="text/javascript">
     RED.nodes.registerType('SUSI-Backlight-Control', {
@@ -165,8 +171,9 @@
             name:    {value: ""},
             topic:   {value: "SUSI-Backlight-Control"},
             dht:     {value: 22},
-            pintype: {value: 0},
-            pin:     {value: 1}
+            functiontype: {value: 0},
+            index:     {value: 1},
+			setvalue: {value: ""}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1
         outputs: 1,              // set the number of outputs - 0 to n
@@ -184,45 +191,45 @@
     });
 	
 	function BacklightControlChangeIndex(){
-	var tp = $("#node-input-pintype").val();
+	var tp = $("#node-input-functiontype").val();
 	var list = "";
 	if(tp == 0) {
-	list = pinlist[0];
+	list = indexlist[0];
 	} else if(tp == 1) {
-	list = pinlist[1];
+	list = indexlist[1];
 	} else if(tp == 2) {
-	list = pinlist[2];
+	list = indexlist[2];
 	}
-	$("#node-input-pin").html(list);
+	$("#node-input-index").html(list);
 	};
 	
-	var pintypetemp = "";
-	var pintemp = "";
-	var pinlist =[];
+	var functiontypetemp = "";
+	var indextemp = "";
+	var indexlist =[];
 	function ws_oneditprepare_BacklightControl() { 
-	pintypetemp = this.pintype;
-	pintemp = this.pin;
+	functiontypetemp = this.functiontype;
+	indextemp = this.index;
 	$.getJSON('SUSI-Backlight',function(data) {
-		pintypelist = "";
+		functiontypelist = "";
 		for (var i=0; i<3; i++) {
-			pinlist[i] = [];
+			indexlist[i] = [];
 			if(data[i][0].toString().indexOf("failed") == -1)
-				pinlist[i] = pinlist[i] + "<option value='0'>Backlight</option>";
+				indexlist[i] = indexlist[i] + "<option value='0'>Backlight</option>";
 			if(data[i][1].toString().indexOf("failed") == -1){
 				var k = i + 1;
-				pintypelist = pintypelist + "<option value=" + i + ">" + "Backlight " + k + "</option>";
-				pinlist[i] = pinlist[i] + "<option value='1'>Brightness</option>";
+				functiontypelist = functiontypelist + "<option value=" + i + ">" + "Backlight " + k + "</option>";
+				indexlist[i] = indexlist[i] + "<option value='1'>Brightness</option>";
 				}
 			if(data[i][2].toString().indexOf("failed") == -1)
-				pinlist[i] = pinlist[i] + "<option value='2'>Freqency</option>";
+				indexlist[i] = indexlist[i] + "<option value='2'>Freqency</option>";
 			if(data[i][3].toString().indexOf("failed") == -1)
-				pinlist[i] = pinlist[i] + "<option value='3'>Polarity</option>";
+				indexlist[i] = indexlist[i] + "<option value='3'>Polarity</option>";
 		}
 		
-		$("#node-input-pintype").html(pintypelist);
-		$("#node-input-pintype").val(pintypetemp);
+		$("#node-input-functiontype").html(functiontypelist);
+		$("#node-input-functiontype").val(functiontypetemp);
 		BacklightControlChangeIndex();
-		$("#node-input-pin").val(pintemp);
+		$("#node-input-index").val(indextemp);
 		 
 	});
 	};

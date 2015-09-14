@@ -36,6 +36,11 @@ module.exports = function(RED) {
         this.read = function(msgIn) {
 			var msg = msgIn ? msgIn : {};
          
+			if (typeof msg.pintype !== 'undefined' && msg.pintype !== '')
+				config.pintype = msg.pintype;
+			if (typeof msg.pin !== 'undefined' && msg.pin !== '')
+				config.pin = msg.pin;
+
 			msg.payload  = susiLib.getGPIO(config.pintype, config.pin);
 		 
 			msg.topic    = node.topic || node.name;
@@ -75,8 +80,15 @@ module.exports = function(RED) {
 		// Read the data & return a message object
 		this.read = function(msgIn) {
 			var msg = msgIn ? msgIn : {};
-				 
-			msg.payload  = susiLib.setGPIO(config.pintype, config.pin, msg.payload);
+				
+			if (typeof msg.pintype !== 'undefined' && msg.pintype !== '')
+				config.pintype = msg.pintype;
+			if (typeof msg.pin !== 'undefined' && msg.pin !== '')
+				config.pin = msg.pin;
+			if (typeof msg.setvalue !== 'undefined' && msg.setvalue !== '')
+				config.setvalue = msg.setvalue;
+			
+			msg.payload  = susiLib.setGPIO(config.pintype, config.pin, config.setvalue);
 				 
 			msg.topic    = node.topic || node.name;
 

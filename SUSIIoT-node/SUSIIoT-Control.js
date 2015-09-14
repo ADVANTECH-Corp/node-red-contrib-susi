@@ -36,7 +36,8 @@ module.exports = function(RED) {
       this.read = function(msgIn) {
          var msg = msgIn ? msgIn : {};
 
-         msg.payload  = msg.payload + "\n" + susiIoTLib.setData(msg.payload);
+         //msg.payload  = msg.payload + "\n" + susiIoTLib.setData(msg.payload);
+		 msg.payload  = susiIoTLib.setData(msg.payload);
          msg.topic    = node.topic || node.name;
 
          return msg;

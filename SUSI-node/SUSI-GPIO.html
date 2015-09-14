@@ -34,7 +34,7 @@
     <br/>
 	
     <div class="form-row">
-        <label for="node-input-pin"><i class="fa fa-list"></i>Index</label>
+        <label for="node-input-pin"><i class="fa fa-list"></i> Pin</label>
         <select id="node-input-pin">
         </select>
     </div>
@@ -54,6 +54,8 @@
    startup, or at a predefined period, determined by an input message</p>
    <p>Outputs a <b>msg</b> containing <b>msg.topic</b> which defaults to the
    sensor name, and <b>msg.payload</b> containing the reading.</p>
+    <p>User can set the pin type, pin under this node or set <code>msg.pintype</code>, <code>msg.pin</code>.</p>
+    <p>If you set <code>msg.pintype</code>, <code>msg.pin</code>, the setting of this node will be override.</p>
 </script>
 
 <script type="text/javascript">
@@ -114,9 +116,15 @@
     <br/>
 	
     <div class="form-row">
-        <label for="node-input-pin"><i class="fa fa-list"></i>Index</label>
+        <label for="node-input-pin"><i class="fa fa-list"></i> Pin</label>
         <select id="node-input-pin">
         </select>
+    </div>
+    <br/>
+	
+	<div class="form-row">
+        <label for="node-input-setvalue"><i class="fa fa-list"></i> Value</label>
+        <input type="text" id="node-input-setvalue">
     </div>
     <br/>
 
@@ -133,7 +141,9 @@
    <p>Node to retrieve the status of a ADVANTECH platform by SUSI, either at
    startup, or at a predefined period, determined by an input message</p>
    <p>Outputs a <b>msg</b> containing <b>msg.topic</b> which defaults to the
-   sensor name, and <b>msg.payload</b> containing the reading.</p>
+   sensor name, and <b>msg.setvalue</b> containing the reading.</p>
+   <p>User can set the pin type, pin, value under this node or set <code>msg.pintype</code>, <code>msg.pin</code>, <code>msg.setvalue</code>.</p>
+    <p>If you set <code>msg.pintype</code>, <code>msg.pin</code>, the setting of this node will be override.</p>
 </script>
 <script type="text/javascript">
     RED.nodes.registerType('SUSI-GPIO-Control', {
@@ -142,7 +152,8 @@
             name:    {value: ""},
             topic:   {value: "SUSI GPIO Control"},
             pintype: {value: 0},
-            pin:     {value: 0}
+            pin:     {value: 0},
+			setvalue: {value: ""}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1
         outputs: 1,              // set the number of outputs - 0 to n

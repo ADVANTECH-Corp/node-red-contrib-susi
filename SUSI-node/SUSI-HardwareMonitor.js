@@ -34,6 +34,11 @@ module.exports = function(RED) {
         this.read = function(msgIn) {			
 			var msg = msgIn ? msgIn : {};
 		
+			if (typeof msg.functiontype !== 'undefined' && msg.functiontype !== '')
+				config.functiontype = msg.functiontype;
+			if (typeof msg.index !== 'undefined' && msg.index !== '')
+				config.index = msg.index;
+			
 			msg.payload = susiLib.getHardwareMonitor(config.functiontype, config.index);
 			
 			msg.topic    = node.topic || node.name;
