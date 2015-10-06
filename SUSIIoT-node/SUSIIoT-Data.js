@@ -52,7 +52,8 @@ module.exports = function(RED) {
 					getValue = jsonSUSIIoT[config.feature][config.featuretype];
 			}
       
-			msg.payload  = getValue;
+			msg.payload = JSON.stringify(getValue);
+
 			msg.topic    = node.topic || node.name;
 	
 			return msg;

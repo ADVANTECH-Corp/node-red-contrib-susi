@@ -44,7 +44,7 @@ module.exports = function(RED) {
 				config.index = msg.index;
 			
 			msg.payload = susiLib.getVgaBacklight(config.functiontype, config.index);
-		
+
 			msg.topic    = node.topic || node.name;
 
 			return msg;
