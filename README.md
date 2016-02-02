@@ -12,11 +12,13 @@ npm install node-red-contrib-susi -g
 ```
 
 ## Nodes included in the package
-**Temperature** Read platfom Temperature (CPU, SYS...) from node-susi.
+**Hardware Monitor** Read platfom Voltage (12V, 5V...), Fan Speed (CPU, SYS...), Temperature (CPU, SYS...) from node-susi.
 
-**Voltage** Read platfom Voltage (12V, 5V...) from node-susi.
+**GPIO** Read/Control platfom GPIO from node-susi.
 
-**Fan Speed** Read platfom Fan Speed (CPU, SYS...) from node-susi.
+**Backlight** Read/Control platfom Backlight from node-susi.
+
+**WatchDog** Control platfom WatchDog from node-susi.
 
 **IoT Info** Read platfom all function's Capability from node-susiiot .
 
