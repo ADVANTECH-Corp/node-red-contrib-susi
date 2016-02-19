@@ -105,7 +105,7 @@
 		}
 		fanspeedlist = "";
 		for (var i=0; i<10; i++) {
-		if(data[1][i].indexOf("failed") == -1 && data[0][i] != "")
+		if(data[1][i].indexOf("failed") == -1 && data[1][i] != "")
 		fanspeedlist = fanspeedlist + "<option value=" + i + ">" + data[1][i] + "</option>";
 		}
 		voltagelist = "";
