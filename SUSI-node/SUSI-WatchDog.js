@@ -51,12 +51,6 @@ module.exports = function(RED) {
 			if (msg)
 				node.send(msg);
 		});
-
-	//   var msg = this.read();
-
-	//   // send out the message to the rest of the workspace.
-	//   if (msg)
-	//      this.send(msg);
 	}
 
 	// Register the node by name.

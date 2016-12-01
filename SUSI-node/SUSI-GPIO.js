@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Copyright 2014, 2015 ADVANTECH Corp.
+ * Copyright 2014, 2015 ADVANTECH Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 // Dependency - dht sensor package
 var susiLib = require("node-susi");
-
 
 module.exports = function(RED) {
    "use strict";
@@ -56,11 +55,6 @@ module.exports = function(RED) {
 				node.send(msg);
 		});
 
-    //   var msg = this.read();
-
-    //   // send out the message to the rest of the workspace.
-    //   if (msg)
-    //      this.send(msg);
     }
 
     // Register the node by name.
@@ -103,11 +97,6 @@ module.exports = function(RED) {
 				node.send(msg);
 		});
 
-    //   var msg = this.read();
-
-    //   // send out the message to the rest of the workspace.
-    //   if (msg)
-    //      this.send(msg);
     }
 
     // Register the node by name.

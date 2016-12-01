@@ -1,5 +1,5 @@
 <!--
-  Copyright 2015 Copyright 2014, 2015 ADVANTECH Corp.
+  Copyright 2014, 2015 ADVANTECH Corp.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -100,22 +100,22 @@
 	$.getJSON('SUSI-HardwareMonitor',function(data) {
 		temperaturelist = "";
 		for (var i=0; i<10; i++) {
-		if(data[0][i].indexOf("failed") == -1)
+		if(data[0][i].indexOf("failed") == -1 && data[0][i] != "")
 		temperaturelist = temperaturelist + "<option value=" + i + ">" + data[0][i] + "</option>";
 		}
 		fanspeedlist = "";
 		for (var i=0; i<10; i++) {
-		if(data[1][i].indexOf("failed") == -1)
+		if(data[1][i].indexOf("failed") == -1 && data[1][i] != "")
 		fanspeedlist = fanspeedlist + "<option value=" + i + ">" + data[1][i] + "</option>";
 		}
 		voltagelist = "";
 		for (var i=0; i<23; i++) {
-		if(data[2][i].indexOf("failed") == -1)
+		if(data[2][i].indexOf("failed") == -1 && data[2][i] != "")
 		voltagelist = voltagelist + "<option value=" + i + ">" + data[2][i] + "</option>";
 		}
 		currentlist = "";
 		for (var i=0; i<3; i++) {
-		if(data[3][i].indexOf("failed") == -1)
+		if(data[3][i].indexOf("failed") == -1 && data[3][i] != "")
 		currentlist = currentlist + "<option value=" + i + ">" + data[3][i] + "</option>";
 		}	
 		
