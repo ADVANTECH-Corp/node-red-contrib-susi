@@ -23,75 +23,85 @@ module.exports = function(RED) {
 
    // The main node definition - most things happen in here
    function susiIoTInfo(config) {
-		// Create a RED node
-		RED.nodes.createNode(this, config);
+        // Create a RED node
+        RED.nodes.createNode(this, config);
 
-		// Store local copies of the node configuration (as defined in the .html)
-		var node = this;
-      
+        // Store local copies of the node configuration (as defined in the .html)
+        var node = this;
 
-		this.topic = config.topic;
- 
-		// Read the data & return a message object
-		this.read = function(msgIn) {
-			var msg = msgIn ? msgIn : {};
-         
-			var getValue = 0;
-          
-			var jsonSUSIIoT = JSON.parse(susiIoTLib.getCapability());
-	      
-			if (config.feature == 'All')
-			{
-				getValue = jsonSUSIIoT;
-			}
-			else
-			{
-				if(config.featuretype == null || config.featuretype == "" || config.featuretype == "All")
-					getValue = jsonSUSIIoT[config.feature];
-				else
-					getValue = jsonSUSIIoT[config.feature][config.featuretype];
-			}
-      
-			msg.payload = JSON.stringify(getValue);
 
-			msg.topic    = node.topic || node.name;
+        this.topic = config.topic;
+
+        // Read the data & return a message object
+        this.read = function(msgIn) {
+            var msg = msgIn ? msgIn : {};
+
+            var getValue = 0;
+
+            var jsonSUSIIoT = JSON.parse(susiIoTLib.getCapability());
+
+            if (config.feature == 'All')
+            {
+                getValue = jsonSUSIIoT;
+            }
+            else
+            {
+                if(config.featuretype == null || config.featuretype == "" || config.featuretype == "All")
+                    getValue = jsonSUSIIoT[config.feature];
+                else
+                    getValue = jsonSUSIIoT[config.feature][config.featuretype];
+            }
+
+            msg.payload = JSON.stringify(getValue);
+
+            msg.topic    = node.topic || node.name;
 
         return msg;
-		};
+        };
 
-		// respond to inputs....
-		this.on('input', function (msg) {
-			msg = this.read(msg);
-			
-			if (msg)
-				node.send(msg);
-		});
+        // respond to inputs....
+        this.on('input', function (msg) {
+            msg = this.read(msg);
+
+            if (msg)
+                node.send(msg);
+        });
 
    //   var msg = this.read();
 
    //   // send out the message to the rest of the workspace.
    //   if (msg)
    //      this.send(msg);
-	}
+    }
 
    // Register the node by name.
-	RED.nodes.registerType("SUSIIoT-Info", susiIoTInfo);
-   
-	RED.httpAdmin.get("/SUSIIoT", function(req,res) {
-	    var Items = [];
-		var jsonSUSIIoT = JSON.parse(susiIoTLib.getData(0));
-		var i = 0;
-		for(var key in jsonSUSIIoT){
-		Items[i] = [];
-		Items[i].push(key);
-			for(var sub_key in jsonSUSIIoT[key]){
-			if(sub_key != "e" && sub_key != "bn" && sub_key != "bt" && sub_key != "bu" && sub_key != "ver" && sub_key != "id")
-			Items[i].push(sub_key)
-			}
-		if (key == 'GPIO')
-			Items[i].sort();
-		i++;
-		}
-		res.send(Items.sort());
+    RED.nodes.registerType("SUSIIoT-Info", susiIoTInfo);
+
+    RED.httpAdmin.get("/SUSIIoT", function(req,res) {
+        var keys = [];
+        var items = {};
+        var jsonSUSIIoT = JSON.parse(susiIoTLib.getData(0));
+        var i = 0;
+
+        for(var key in jsonSUSIIoT){
+            if(!~keys.indexOf(key)) {  // a new key
+                keys.push(key);
+                items[key] = [];
+            }
+
+            for(var sub_key in jsonSUSIIoT[key]){
+                if(sub_key != "e" && sub_key != "bn" && sub_key != "bt" &&
+                   sub_key != "bu" && sub_key != "ver" && sub_key != "id") {
+                    items[key].push(sub_key)
+                }
+            }
+
+            items[key].sort();
+        }
+        
+        res.send({
+            "features": keys.sort()
+            , "types": items
+        });
     });
 }

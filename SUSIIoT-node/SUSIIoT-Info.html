@@ -28,13 +28,13 @@
         </select>
     </div>
     <br/>
-    
-	<div class="form-row" id="row-featuretype">
+
+    <div class="form-row" id="row-featuretype">
         <label for="node-input-featuretype"><i class="fa fa-dot-circle-o"></i> Type</label>
         <select id="node-input-featuretype">
         </select>
     </div>
-	<br/>
+    <br/>
 
     <!-- Node name -->
     <div class="form-row">
@@ -59,7 +59,7 @@
             name:    {value: ""},
             topic:   {value: "SUSIIoT Info"},
             feature:  {value: ""},
-			featuretype: {value: ""}
+            featuretype: {value: ""}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1
         outputs: 1,              // set the number of outputs - 0 to n
@@ -74,45 +74,45 @@
                  },
         oneditprepare: ws_oneditprepare_Info
     });
-	
-	var typelist = [];
-	
-	function FeatureChangeIndex() {
-	var list = typelist[$("#node-input-feature").val()];
-	if (list != null && list != "") {
-		$("#node-input-featuretype").html(list);
-		$("#row-featuretype").show();
-	}
-	else {
-		var temp = "All";
-		$("#node-input-featuretype").val(temp);
-		$("#row-featuretype").hide();
-	}
-	}
-	
-	function ws_oneditprepare_Info() {  
-	featuretmp = this.feature;
-	featuretypetmp = this.featuretype;
-	$.getJSON('SUSIIoT',function(data) {
-		featurelist = "<option value=All>All</option>";
-		for (var i=0; i<data.length; i++) {
-			featurelist = featurelist + '<option value="' + data[i][0] + '">' + data[i][0] +'</option>';
-			if(data[i].length > 1)
-				typelist[data[i][0]] = "<option value=All>All</option>";
-			for (var j=1; j<data[i].length; j++) {
-			typelist[data[i][0]] = typelist[data[i][0]] + '<option value="' + data[i][j] + '">' + data[i][j] +'</option>';
-			}
-		}
-		
-		$("#node-input-feature").html(featurelist);
-		$("#node-input-feature").val(featuretmp);
-		FeatureChangeIndex();
-		
-		var temp = "All";
-		if (typelist[featuretmp] != 'undefined')
-			$("#node-input-featuretype").val(featuretypetmp);
-		else
-			$("#node-input-featuretype").val(temp);
-    });
-	}
+
+    function FeatureChangeIndex(type_opts) {
+        var list = type_opts[$("#node-input-feature").val()];
+        if (list != null && list != "") {
+            $("#node-input-featuretype").html(list);
+            $("#row-featuretype").show();
+        } else {
+            var temp = "All";
+            $("#node-input-featuretype").val(temp);
+            $("#row-featuretype").hide();
+        }
+    }
+
+    function ws_oneditprepare_Info() {
+        var featuretmp = this.feature;
+        var featuretypetmp = this.featuretype;
+        $.getJSON('SUSIIoT',function(data) {
+            var features = data.features;
+            var types = data.types;
+
+            featurelist = "<option value=All>All</option>";
+            for(var idx in features) {
+                var key = features[idx];
+                featurelist = featurelist + '<option value="' + key + '">' + key +'</option>';
+
+                if(types[key].length) {
+                    typelist[key] = "<option value=All>All</option>";
+                    for (var sub_idx in types[key]) {
+                        typelist[key] = typelist[key] + '<option value="' + types[key][sub_idx] + '">' + types[key][sub_idx] +'</option>';
+                    }
+                }
+            }
+
+            var init_opt = "All";
+            $("#node-input-feature").html(featurelist);
+            $("#node-input-feature").val(featuretmp? featuretmp : init_opt);
+
+            FeatureChangeIndex();
+            $("#node-input-featuretype").val(featuretypetmp? featuretypetmp : init_opt);
+        });
+    }
 </script>

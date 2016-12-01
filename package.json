@@ -5,7 +5,7 @@
     "url": "https://www.npmjs.com/~neo.lo"
   },
   "name": "node-red-contrib-susi",
-  "version": "0.0.10",
+  "version": "0.0.13",
   "description": "Node-red node for SUSI",
   "dependencies": {
     "node-susi": "0.0.x",
@@ -35,5 +35,32 @@
       "SUSIIoT-Data": "SUSIIoT-node/SUSIIoT-Data.js",
       "SUSIIoT-Control": "SUSIIoT-node/SUSIIoT-Control.js"
     }
-  }
+  },
+  "gitHead": "98621bfa30829a6a22463b910e97bfe4f7ce2684",
+  "_id": "node-red-contrib-susi@0.0.12",
+  "scripts": {},
+  "_shasum": "eca9e33cdbe56d3efe3a1672b3b34b73d7833ce9",
+  "_from": "node-red-contrib-susi@latest",
+  "_npmVersion": "2.14.12",
+  "_nodeVersion": "4.2.4",
+  "_npmUser": {
+    "name": "neo.lo",
+    "email": "neo.lo@advantech.com.tw"
+  },
+  "dist": {
+    "shasum": "eca9e33cdbe56d3efe3a1672b3b34b73d7833ce9",
+    "tarball": "https://registry.npmjs.org/node-red-contrib-susi/-/node-red-contrib-susi-0.0.12.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "neo.lo",
+      "email": "neo.lo@advantech.com.tw"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/node-red-contrib-susi-0.0.12.tgz_1455873737902_0.0727441399358213"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/node-red-contrib-susi/-/node-red-contrib-susi-0.0.12.tgz"
 }
